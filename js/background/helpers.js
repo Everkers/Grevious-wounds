@@ -1,74 +1,74 @@
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 // Set the environment
 //----------------------------------------------------------------------------------------------------------------------------------------------------
-var ENVIRONMENT = 'development';
+const ENVIRONMENT = 'development';
 // if (chrome.runtime.id == '[CWS_EXTENSION_ID]') ENVIRONMENT = 'production'; // Chrome Web Store version
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 // Global vars
 //----------------------------------------------------------------------------------------------------------------------------------------------------
-var PRINT_LOGS = true;
+const PRINT_LOGS = true;
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 // Helper functions
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 // Get tab name: helper method for debug prints
-var getTabName = function(tab) {
-	return tab.id + ' "' + tab.url.substr(0, 135).replace('https://', '').replace('http://', '') + '...' + '"';
+const getTabName = function (tab) {
+  return `${tab.id} "${tab.url.substr(0, 135).replace('https://', '').replace('http://', '')}...` + '"';
 };
 
 // Logging helpers
-var log = function() {
-	if (PRINT_LOGS) console.log.apply(console, arguments);
+const log = function () {
+  if (PRINT_LOGS) console.log.apply(console, arguments);
 };
-var logWarn = function() {
-	if (PRINT_LOGS) console.warn.apply(console, arguments);
+const logWarn = function () {
+  if (PRINT_LOGS) console.warn.apply(console, arguments);
 };
-var logError = function() {
-	if (PRINT_LOGS) console.error.apply(console, arguments);
+const logError = function () {
+  if (PRINT_LOGS) console.error.apply(console, arguments);
 };
-var logTime = function() {
-	if (PRINT_LOGS) console.time.apply(console, arguments);
+const logTime = function () {
+  if (PRINT_LOGS) console.time.apply(console, arguments);
 };
-var logTimeEnd = function() {
-	if (PRINT_LOGS) console.timeEnd.apply(console, arguments);
+const logTimeEnd = function () {
+  if (PRINT_LOGS) console.timeEnd.apply(console, arguments);
 };
 
 // Parse the specified URL into host, path, hash, etc.
-var parseUrl = function(url) {
-	var parser = document.createElement('a');
-	parser.href = url;
-	return parser;
-	// e.g. {protocol: "http:", host: "abc.com:3000", hostname: "abc.com", port: "3000", pathname: "/path/", search: "?search=test", hash: "#hash"}
+const parseUrl = function (url) {
+  const parser = document.createElement('a');
+  parser.href = url;
+  return parser;
+  // e.g. {protocol: "http:", host: "abc.com:3000", hostname: "abc.com", port: "3000", pathname: "/path/", search: "?search=test", hash: "#hash"}
 };
 
 // Send an HTTP POST request expecting a JSON response
-var sendHttpPostRequest = function(url, params, callback) {
-	var kvps = [];
-	for (var k in params) {
-		var v = params[k];
-		kvps.push(encodeURIComponent(k) + "=" + encodeURIComponent(v));
-	}
-	var paramsString = kvps.join("&");
+const sendHttpPostRequest = function (url, params, callback) {
+  const kvps = [];
+  for (const k in params) {
+    const v = params[k];
+    kvps.push(`${encodeURIComponent(k)}=${encodeURIComponent(v)}`);
+  }
+  const paramsString = kvps.join('&');
 
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4) {
-			if (xhr.status == 200) {
-				var resp = null;
-				// JSON.parse does not evaluate the attacker's scripts.
-				try {
-					var resp = JSON.parse(xhr.responseText);
-				} catch (e) {
-					callback("Error parsing response as JSON: ", e, "\nResponse is: " + xhr.responseText);
-				}
-				if (resp) callback(null, resp);
-			} else {
-				callback(xhr.status + " | " + xhr.statusText + " | " + xhr.responseText);
-			}
-		}
-	};
-	xhr.send(paramsString);
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      if (xhr.status == 200) {
+        var resp = null;
+        // JSON.parse does not evaluate the attacker's scripts.
+        try {
+          var resp = JSON.parse(xhr.responseText);
+        } catch (e) {
+          callback('Error parsing response as JSON: ', e, `\nResponse is: ${xhr.responseText}`);
+        }
+        if (resp) callback(null, resp);
+      } else {
+        callback(`${xhr.status} | ${xhr.statusText} | ${xhr.responseText}`);
+      }
+    }
+  };
+  xhr.send(paramsString);
 };
