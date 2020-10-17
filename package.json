@@ -1,0 +1,24 @@
+{
+  "name": "grievous-wounds",
+  "version": "1.0.0",
+  "description": "A Chrome Extension boilerplate with live-reload of content scripts and CSS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liorgrossman/chrome-extension-boilerplate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liorgrossman/chrome-extension-boilerplate/issues"
+  },
+  "homepage": "https://github.com/liorgrossman/chrome-extension-boilerplate#readme",
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1"
+  }
+}

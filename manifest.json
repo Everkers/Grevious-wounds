@@ -1,11 +1,11 @@
 {
 	"manifest_version": 2,
 
-	"name": "[NAME]",
-	"short_name": "[NAME]",
+	"name": "Grevious wounds",
+	"short_name": "Grevious wounds",
 	"version": "0.1",
-	"description": "[DESCRIPTION]",
-	"author": "[AUTHOR]",
+	"description": "",
+	"author": "Everkers,Ziad",
 
 	"icons": {
 		"16": "images/icon.png",
